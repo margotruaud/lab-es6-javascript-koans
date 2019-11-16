@@ -413,17 +413,17 @@ describe('destructuring function parameters. ', () => {
 
   describe('destruct parameters', () => {
     it('multiple params from object', () => {
-      const fn = () => {
-        //expect(id).toEqual(42);
-        //expect(name).toEqual('Wolfram');
+      const fn = ({id, name}) => {
+        expect(id).toEqual(42);
+        expect(name).toEqual('Wolfram');
       };
       const user = {name: 'Wolfram', id: 42};
       fn(user);
     });
 
     it('multiple params from array/object', () => {
-      const fn = ([]) => {
-        //expect(name).toEqual('Alice');
+      const fn = ([,{name}]) => {
+        expect(name).toEqual('Alice');
       };
       const users = [{name: 'nobody'}, {name: 'Alice', id: 42}];
       fn(users);
@@ -432,26 +432,26 @@ describe('destructuring function parameters. ', () => {
 
   describe('default values', () => {
     it('for simple values', () => {
-      const fn = (id, name) => {
-        //expect(id).toEqual(23);
-        //expect(name).toEqual('Bob');
+      const fn = ({id=23, name="Bob"}) => {
+        expect(id).toEqual(23);
+        expect(name).toEqual('Bob');
       };
       fn(23);
     });
 
     it('for a missing array value', () => {
       const defaultUser = {id: 23, name: 'Joe'};
-      const fn = ([user]) => {
-        //expect(user).toEqual(defaultUser);
+      const fn = ([user=defaultUser]) => {
+        expect(user).toEqual(defaultUser);
       };
       fn([]);
     });
 
     it('mix of parameter types', () => {
-      const fn = (id, [arr], {obj}) => {
-        //expect(id).toEqual(1);
-        //expect(arr).toEqual(2);
-        //expect(obj).toEqual(3);
+      const fn = (id=1, [arr=2], {obj=3}) => {
+        expect(id).toEqual(1);
+        expect(arr).toEqual(2);
+        expect(obj).toEqual(3);
       };
       fn(void 0, [], {});
     });
@@ -464,7 +464,7 @@ describe('assign object property values to new variables while destructuring. ',
   describe('for simple objects', function() {
     it('use a colon after the property name, like so `propertyName: newName`', () => {
       const {x} = {x: 1};
-      //expect(y).toEqual(1);
+      //  expect(y).toEqual(1);
     });
 
     it('assign a new name and give it a default value using `= <default value>`', () => {
